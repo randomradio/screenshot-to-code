@@ -15,8 +15,14 @@ RUN yarn install
 # Copy the current directory contents into the container at /app
 COPY ./ /app/
 
+# Build the application
+RUN yarn build
+
+# Install a static server
+RUN yarn global add serve
+
 # Expose port 5173 to access the server
 EXPOSE 5173
 
-# Command to run the application
-CMD ["yarn", "dev", "--host", "0.0.0.0"]
+# Command to run the application using serve
+CMD ["serve", "-s", "dist", "-l", "5173"]
